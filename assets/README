@@ -1,0 +1,26 @@
+# Zawiyah Quran App Assets
+
+This folder contains religious content for the app:
+
+## Folder Structure:
+- `99namesofAllah/` - 99 Names of Allah 
+- `flags/` - Country flags 
+- `images/` - General images 
+- `manzil/` - Manzil verses 
+- `mushaf/` - Quran pages/images
+- `duas.json` - Dua database (included here)
+
+## Download Full Assets:
+Due to large file size , full assets are hosted on Google Drive:
+
+### Option 1: Download ZIP (Recommended)
+[Download assets.zip](https://drive.google.com/file/d/1spYvRZb5NubmksRr6ERw5HqZ3loS-Msz/view?usp=sharing)
+
+Extract to project root to restore full `assets/` folder.
+
+
+## Setup Instructions:
+1. Download assets.zip from above link
+2. Extract to project root (overwrites this folder)
+3. Run `flutter pub get`
+4. The app should now have all assets
