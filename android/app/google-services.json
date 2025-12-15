@@ -1,0 +1,43 @@
+{
+  "project_info": {
+    "project_number": "1068497114270",
+    "project_id": "zawiyah-8cee6",
+    "storage_bucket": "zawiyah-8cee6.firebasestorage.app",
+    "firebase_url": "https://zawiyah-8cee6.firebaseio.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1068497114270:android:9753696ecd1a04a26c978f",
+        "android_client_info": {
+          "package_name": "com.example.zawiyah"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1068497114270-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDSZ7qADzFyUCHRcQTcBb_k9C4G-3DICXk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        },
+        "identitytoolkit": {
+          "type": "identitytoolkit#AndroidClient",
+          "api_key": [
+            {
+              "current_key": "AIzaSyDSZ7qADzFyUCHRcQTcBb_k9C4G-3DICXk"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
