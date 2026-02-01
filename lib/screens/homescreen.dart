@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zawiyah/providers/settings_provider.dart';
 import 'package:zawiyah/screens/asma_ul_husna_screen.dart';
+import 'package:zawiyah/screens/bookmark_screen.dart';
 import 'package:zawiyah/screens/juz_list_screen.dart';
 import 'package:zawiyah/screens/manzil_screen.dart';
 import 'package:zawiyah/screens/dua_list_screen.dart';
@@ -14,6 +15,7 @@ import 'package:zawiyah/screens/tasbih_screen.dart';
 import '../providers/quran_provider.dart';
 import '../widgets/custom_drawer.dart';
 import 'package:zawiyah/widgets/profile_drawer_right.dart';
+import 'surah_audio_list_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -24,7 +26,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
 
-  // FIX: The font size dialog now directly uses and updates the SettingsProvider.
   void _showFontSizeDialog() {
     final settings = Provider.of<SettingsProvider>(context, listen: false);
     final isDarkMode = settings.isDarkMode;
@@ -34,7 +35,6 @@ class _HomeScreenState extends State<HomeScreen> {
     showDialog(
       context: context,
       builder: (context) {
-        // Use a Consumer here to rebuild the dialog contents when the provider changes.
         return Consumer<SettingsProvider>(
           builder: (context, settingsProvider, child) {
             return AlertDialog(
@@ -51,7 +51,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   divisions: 7,
                   label: "${(settingsProvider.fontScale * 100).toStringAsFixed(0)}%",
                   onChanged: (double value) {
-                    // Directly update the provider, which will cause the UI to rebuild.
                     settings.setFontScale(value);
                   },
                   activeColor: const Color(0xFF863ED5),
@@ -95,15 +94,12 @@ class _HomeScreenState extends State<HomeScreen> {
             title: Text("ZAWIYAH", style: TextStyle(fontFamily: 'Amiri', fontSize: 28, fontWeight: FontWeight.w600, color: textColor)),
             centerTitle: true,
             actions: [
-              //new taskssss FFFFFFFFFFFF
               Builder(
                 builder: (context) => IconButton(
                   icon: const Icon(Icons.account_circle),
                   onPressed: () => Scaffold.of(context).openEndDrawer(),
                 ),
               ),
-             // IconButton(icon: const Icon(Icons.card_giftcard, color: Colors.orangeAccent), onPressed: () {}),
-              //IconButton(icon: const Icon(Icons.workspace_premium, color: Colors.amber), onPressed: () {}),
             ],
           ),
           body: SingleChildScrollView(
@@ -223,9 +219,10 @@ class _HomeScreenState extends State<HomeScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           _buildQuickActionItem(context, icon: Icons.book_outlined, title: "Read Quran", onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const SurahListScreen())), isDarkMode: isDarkMode, iconColor: iconColor),
-          _buildQuickActionItem(context, icon: Icons.headset_outlined, title: "Audio", onTap: () {}, isDarkMode: isDarkMode, iconColor: iconColor),
+          _buildQuickActionItem(context, icon: Icons.headset_outlined, title: "Audio", onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const SurahAudioListScreen())), isDarkMode: isDarkMode, iconColor: iconColor),
           _buildQuickActionItem(context, icon: Icons.list_alt_outlined, title: "Parah", onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const JuzListScreen())), isDarkMode: isDarkMode, iconColor: iconColor),
-          _buildQuickActionItem(context, icon: Icons.bookmark_border_outlined, title: "Bookmark", onTap: () {}, isDarkMode: isDarkMode, iconColor: iconColor),
+          // FIX: Navigate to BookmarkScreen
+          _buildQuickActionItem(context, icon: Icons.bookmark_border_outlined, title: "Bookmark", onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const BookmarkScreen())), isDarkMode: isDarkMode, iconColor: iconColor),
         ],
       ),
     );
@@ -255,7 +252,6 @@ class _HomeScreenState extends State<HomeScreen> {
       _buildFeatureItem(context, imagePath: 'assets/images/d1.png', title: "Dua", onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const DuaListScreen())), isDarkMode: isDarkMode, cardColor: cardColor, shadowColor: shadowColor, textColor: textColor, imageColor: imageColor),
       _buildFeatureItem(context, imagePath: 'assets/images/t1.png', title: "Tasbih", onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const TasbihScreen())), isDarkMode: isDarkMode, cardColor: cardColor, shadowColor: shadowColor, textColor: textColor, imageColor: imageColor),
       _buildFeatureItem(context, imagePath: 'assets/images/r2.png', title: "Ramadan", onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const RamadanCalendarScreen())), isDarkMode: isDarkMode, cardColor: cardColor, shadowColor: shadowColor, textColor: textColor, imageColor: imageColor),
-      _buildFeatureItem(context, imagePath: 'assets/images/q1.png', title: "Qibla", onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const QiblaScreen())), isDarkMode: isDarkMode, cardColor: cardColor, shadowColor: shadowColor, textColor: textColor, imageColor: imageColor),
       _buildFeatureItem(context, imagePath: 'assets/images/m1.png', title: "Manzil", onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const ManzilScreen())), isDarkMode: isDarkMode, cardColor: cardColor, shadowColor: shadowColor, textColor: textColor, imageColor: imageColor),
       _buildFeatureItem(context, imagePath: 'assets/images/asmaulhusna.png', title: "Asma ul Husna", onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const AsmaUlHusnaScreen())), isDarkMode: isDarkMode, cardColor: cardColor, shadowColor: shadowColor, textColor: textColor, imageColor: imageColor),
     ];
@@ -351,9 +347,10 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildBottomNavigationGrid(BuildContext context, bool isDarkMode, Color cardColor, Color shadowColor, Color textColor, Color imageColor) {
     final items = [
       _buildGridItem(context, imagePath: 'assets/images/qic.png', label: "Quran", onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const SurahListScreen())), isDarkMode: isDarkMode, cardColor: cardColor, shadowColor: shadowColor, textColor: textColor, imageColor: imageColor),
-      _buildGridItem(context, imagePath: 'assets/images/headphone.png', label: "Surah (Audio)", onTap: () {}, isDarkMode: isDarkMode, cardColor: cardColor, shadowColor: shadowColor, textColor: textColor, imageColor: imageColor),
+      _buildGridItem(context, imagePath: 'assets/images/headphone.png', label: "Surah (Audio)", onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const SurahAudioListScreen())), isDarkMode: isDarkMode, cardColor: cardColor, shadowColor: shadowColor, textColor: textColor, imageColor: imageColor),
       _buildGridItem(context, imagePath: 'assets/images/qur.png', label: "Parah", onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const JuzListScreen())), isDarkMode: isDarkMode, cardColor: cardColor, shadowColor: shadowColor, textColor: textColor, imageColor: imageColor),
-      _buildGridItem(context, imagePath: 'assets/images/bm.png', label: "Bookmark", onTap: () {}, isDarkMode: isDarkMode, cardColor: cardColor, shadowColor: shadowColor, textColor: textColor, imageColor: imageColor),
+      // FIX: Navigate to BookmarkScreen
+      _buildGridItem(context, imagePath: 'assets/images/bm.png', label: "Bookmark", onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const BookmarkScreen())), isDarkMode: isDarkMode, cardColor: cardColor, shadowColor: shadowColor, textColor: textColor, imageColor: imageColor),
     ];
 
     return GridView.builder(
@@ -375,13 +372,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildGridItem(BuildContext context, {required String imagePath, required String label, required VoidCallback onTap, required bool isDarkMode, required Color cardColor, required Color shadowColor, required Color textColor, required Color imageColor}) {
     Widget imageWidget = Image.asset(imagePath, width: 70, height: 70, errorBuilder: (c, o, s) => const SizedBox(width: 40, height: 40));
 
-    // if (isDarkMode) {
-    //   imageWidget = ColorFiltered(
-    //     colorFilter: ColorFilter.mode(imageColor, BlendMode.srcIn),
-    //     child: imageWidget,
-    //   );
-    // }
-    
     return Container(
       decoration: BoxDecoration(
         color: cardColor,
